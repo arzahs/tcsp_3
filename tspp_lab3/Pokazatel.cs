@@ -33,7 +33,7 @@ namespace tspp_lab3
                 Font font = new Font("Arial", 8);
                 SolidBrush brush = new SolidBrush(clr);
                 grf.FillEllipse(brush, X, Y, W, H);
-                grf.DrawString(name_prm + "-" + val_prm.ToString(), font, Brushes.Black, X, Y + H / 2);
+                grf.DrawString(name_prm + "-" + val_prm.ToString(), font, Brushes.Black, X, Y - 5 + H / 2);
             }
         }
 
