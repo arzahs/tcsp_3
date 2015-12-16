@@ -26,14 +26,15 @@ namespace tspp_lab3
             /// <param name="Y">Коорд.Y лівого верхнього кута фігури</param>
             /// <param name="W">Ширина фігури</param>
             /// <param name="H">Висота фігури</param>
-            public void Draw(Graphics grf, Color clr, int X, int Y, int W, int H)
-            {
+            public void Draw(Graphics grf, Color clr, Point[] p)
+            {   
                 //Виводяться еліпс і значення: «ім'я показника» - «значення»
                 //Колір тексту - чорний
                 Font font = new Font("Arial", 8);
                 SolidBrush brush = new SolidBrush(clr);
-                grf.FillEllipse(brush, X, Y, W, H);
-                grf.DrawString(name_prm + "-" + val_prm.ToString(), font, Brushes.Black, X, Y - 5 + H / 2);
+
+                grf.FillPolygon(brush, p);
+                grf.DrawString(name_prm + "-" + val_prm.ToString(), font, Brushes.Black, p[0].X+5, p[0].Y+5);
             }
         }
 

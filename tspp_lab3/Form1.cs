@@ -45,41 +45,42 @@ namespace tspp_lab3
             Pen pen = new Pen(Color.Black, 2);
             Color clr = Color.Bisque;
 
-            int N = prm.Length / 2;		// до-у зон в одному ряді
-            if (N * 2 != prm.Length) N++;
+            int N = prm.Length;		// до-у зон в одному ряді
             int pole = 4;
             int w_zone = w_graf / N;	//ширина зони
             int summa = 0;
-            //рисование суммы:
-            graf.FillEllipse(brush, xc-35, 0, 70, 35);
-            int Y = 35, X = w_graf/2;
-            graf.DrawLine(pen, X, Y, X, Y+10);
-            Y = 45; X = 45;
-            graf.DrawLine(pen, X, Y, w_graf-45, Y);
-            Y = 55; X = 10;
-            //ряд сверху
+            //рисуем верх
+            int heightSizePoligon = h_graf/(N+1);
+            int yStart = 0;
+            int size = heightSizePoligon + yStart;
+            int widthSizePoligon = heightSizePoligon;
+            int stepHeight = h_graf / (N+1);
+            int stepWidth = h_graf / (N+1);
+            Point[] p = {
+                    new Point(w_graf/2, 0),
+                    new Point(w_graf/2-widthSizePoligon, heightSizePoligon),
+                    new Point(w_graf/2+widthSizePoligon, heightSizePoligon),
+                    new Point(w_graf/2, 0),
+                            };
+                     
+            graf.FillPolygon(brush, p);
+            
             for (int j = 0; j < N; j++)
-            {
+            {   
                 clr = Color.FromArgb(randObj.Next(255), randObj.Next(255), randObj.Next(255));
-                prm[j].Draw(graf, clr, X, Y, 70, 35);
-                graf.DrawLine(pen, X+35, Y+1, X+35, 45);
-                X += 183;
+                
+                Point[] pointsPolygon = {
+                    new Point(w_graf/2-widthSizePoligon, heightSizePoligon),
+                    new Point(w_graf/2-widthSizePoligon-stepWidth, heightSizePoligon+stepHeight),
+                    new Point(w_graf/2+widthSizePoligon+stepWidth, heightSizePoligon+stepHeight),
+                    new Point(w_graf/2+widthSizePoligon, heightSizePoligon),
+                            };
+                widthSizePoligon += stepWidth;
+                heightSizePoligon += stepHeight;
+                prm[j].Draw(graf, clr, pointsPolygon);
                 summa += prm[j].val_prm;
-
             }
-            //РЯД НИЖЕ
-            Y = 100; X = 10;
-            for (int j = 0; j < N; j++)
-            {
-                clr = Color.FromArgb(randObj.Next(255), randObj.Next(255), randObj.Next(255));
-                prm[j].Draw(graf, clr, X, Y, 70, 35);
-                graf.DrawLine(pen, X + 35, Y + 1, X + 35, 90);
-                X += 183;
-                summa += prm[j].val_prm;
-
-            }
-            graf.DrawString("Summa: " + summa.ToString(), font, Brushes.Black, xc - 35 + pole, 25 / 2 - pole);
-
+            graf.DrawString("Summa: " + summa.ToString(), font, Brushes.Black, w_graf/2-28, 10);
             /*///-вивід верхнього ряду-
             int Y = pole, X = pole;	//установка початкових значень
             int sum = 0;		//установка в 0 підсумкової суми
